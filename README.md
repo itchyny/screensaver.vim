@@ -25,7 +25,7 @@ This software is released under the MIT License, see LICENSE.
 
         Plugin 'itchyny/screensaver.vim'
 
-2. Install with `:BundleInstall`.
+2. Install with `:PluginInstall`.
 
 ### NeoBundle (https://github.com/Shougo/neobundle.vim)
 1. Add the following configuration to your .vimrc.
