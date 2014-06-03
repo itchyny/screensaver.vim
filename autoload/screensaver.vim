@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/06/01 18:53:32.
+" Last Change: 2014/06/03 21:44:58.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -106,7 +106,6 @@ endfunction
 
 function! s:self.redraw() dict
   call cursor(1, 1)
-  let self.count = get(self, 'count', -1) + 1
   call self.call('redraw')
   silent! call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>", 'n')
 endfunction
@@ -132,7 +131,6 @@ function! s:self.previous() dict
 endfunction
 
 function! s:self.end(...) dict
-  if !self.count | return | endif
   call self.call('end')
   if a:0 && a:1 || !get(g:, 'screensaver_password')
     call self.restoreoption()
