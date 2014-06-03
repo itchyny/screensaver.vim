@@ -52,8 +52,7 @@ static void interuppthandler(int signal)
 }
 
 static int terminalwidth, terminalheight;
-static int _terminalwidth, _terminalheight;
-static int terminalsize(void)
+static void terminalsize(void)
 {
   int status;
   struct winsize size;
@@ -67,10 +66,6 @@ static int terminalsize(void)
     terminalwidth = size.ws_col;
     terminalheight = size.ws_row;
   }
-  status = _terminalwidth != terminalwidth || _terminalheight != terminalheight;
-  _terminalwidth = terminalwidth;
-  _terminalheight = terminalheight;
-  return status;
 }
 
 static int pixel_number[10][5][4] = {
@@ -129,7 +124,7 @@ static int printspaces(char c, int cursori, int cursorj, int skiphead)
 
 static void clockscreensaver(void)
 {
-  int i, j, di, dj, pi, pj, k, red, green, blue, colordiff, index, width;
+  int i, j, di, dj, pi, pj, k, l, red, green, blue, colordiff, index, width;
   int * colorptr;
   int * colorptrs[3] = { &red, &green, &blue };
   time_t timer;
@@ -171,15 +166,22 @@ static void clockscreensaver(void)
       colordiff = ((rand() % 2) * 2 - 1) * 8;
       colorptr = colorptrs[rand() % 3];
     }
-    if (index % 12 == 0 && terminalsize()) {
-      setdefaultcolor();
-      erasescreen();
-    }
     (*colorptr) += colordiff;
     if (colordiff < 0 && (*colorptr) < 8 || colordiff > 0 && (*colorptr) > 248) {
       colordiff = - colordiff; (*colorptr) += 2 * colordiff;
     }
     usleep(100000);
+    if (index % 24 == 0) {
+      terminalsize();
+      setdefaultcolor();
+      for (k = 0; k < terminalheight; ++k) {
+        cursormove(k, 1);
+        for (l = 0; l < terminalwidth; ++l) {
+          printf(" ");
+        }
+      }
+      cursorhide();
+    }
   }
 }
 
