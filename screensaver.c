@@ -142,9 +142,20 @@ static void clockscreensaver(void)
     timer = time(NULL);
     date = localtime(&timer);
     setdefaultcolor();
-    for (k = 0; k < 5; ++k) {
-      cursormove(pi + k, pj);
-      printf("                                                              ");
+    if (index % 48 == 0) {
+      terminalsize();
+      for (k = 0; k < terminalheight; ++k) {
+        cursormove(k + 1, 1);
+        for (l = 0; l < terminalwidth; ++l) {
+          printf(" ");
+        }
+      }
+      cursorhide();
+    } else {
+      for (k = 0; k < 5; ++k) {
+        cursormove(pi + k, pj);
+        printf("                                                              ");
+      }
     }
     sprintf(str, "%d:%02d:%02d", date->tm_hour, date->tm_min, date->tm_sec);
     width = 0;
@@ -171,17 +182,6 @@ static void clockscreensaver(void)
       colordiff = - colordiff; (*colorptr) += 2 * colordiff;
     }
     usleep(100000);
-    if (index % 24 == 0) {
-      terminalsize();
-      setdefaultcolor();
-      for (k = 0; k < terminalheight; ++k) {
-        cursormove(k, 1);
-        for (l = 0; l < terminalwidth; ++l) {
-          printf(" ");
-        }
-      }
-      cursorhide();
-    }
   }
 }
 
