@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/source/clock.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/06/01 01:31:29.
+" Last Change: 2014/06/05 21:07:34.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -34,19 +34,6 @@ function! s:self.redraw() dict
   endif
   call self.hl.highlight()
   let [h, m, s] = screensaver#util#time()
-  " if has_key(self, 'time') && len(self.time)
-  "   let [h, m, s] = self.time
-  "   let self.ccc = get(self, 'ccc', 0) + 1
-  "   if self.ccc == 4
-  "     let self.time = [h, m + (s > 59), s < 59 ? s + 1 : 0]
-  "     let self.ccc = 0
-  "   endif
-  " else
-  "   let self.time = [h, m, s]
-  " endif
-  "   let pixels = screensaver#pixel#getstr(printf('%d:%02d:%02d', h, m, s))
-  "   let self.pixels = pixels
-  "   let self.pixelswidth = screensaver#util#sum(pixels[0])
   if self.time == [h, m, s]
     let pixels = self.pixels
   else
