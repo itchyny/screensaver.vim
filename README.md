@@ -3,7 +3,7 @@
 
     :Screensaver
 
-![screensaver.vim](https://raw.github.com/wiki/itchyny/screensaver.vim/image/image.gif)
+![screensaver.vim](https://raw.githubusercontent.com/wiki/itchyny/screensaver.vim/image/image.gif)
 
 ## Author
 itchyny (https://github.com/itchyny)
