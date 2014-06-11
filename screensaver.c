@@ -138,7 +138,7 @@ static void clockscreensaver(void)
   colordiff = ((rand() % 2) * 2 - 1) * 8; colorptr = colorptrs[rand() % 3];
   index = 0; width = 0;
   while (1) {
-    ++index;
+    index = (index + 1) % 14400;
     timer = time(NULL);
     date = localtime(&timer);
     setdefaultcolor();
