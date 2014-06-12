@@ -1,4 +1,4 @@
-*screensaver*	ScreenSavers for Vim
+*screensaver.txt*	ScreenSavers for Vim
 
 Version: 0.0
 Author: itchyny (https://github.com/itchyny)
