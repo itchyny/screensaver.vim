@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/06/03 21:44:58.
+" Last Change: 2014/12/07 20:45:16.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -111,6 +111,8 @@ function! s:self.redraw() dict
 endfunction
 
 function! s:self.mapping() dict
+  let save_cpo = &cpo
+  set cpo&vim
   nnoremap <buffer><silent> <Plug>(screensaver_end) :<C-u>call b:screensaver.end()<CR>
   call screensaver#util#nmapall('<Plug>(screensaver_end)')
   if get(g:, 'screensaver_password')
@@ -118,6 +120,7 @@ function! s:self.mapping() dict
   else
     silent! nunmap <buffer> :
   endif
+  let &cpo = save_cpo
 endfunction
 
 function! s:self.call(method) dict
