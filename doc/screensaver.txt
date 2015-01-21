@@ -1,10 +1,10 @@
 *screensaver.txt*	ScreenSavers for Vim
 
-Version: 0.0
+Version: 0.1
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/screensaver.vim
-Last Change: 2015/01/21 09:06:14.
+Last Change: 2015/01/21 11:05:47.
 
 CONTENTS					*screensaver-contents*
 
