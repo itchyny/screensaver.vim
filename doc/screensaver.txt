@@ -1,10 +1,10 @@
 *screensaver.txt*	ScreenSavers for Vim
 
-Version: 0.1
+Version: 0.2
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/screensaver.vim
-Last Change: 2015/01/21 11:05:47.
+Last Change: 2015/01/24 18:22:43.
 
 CONTENTS					*screensaver-contents*
 
@@ -87,6 +87,14 @@ KEY MAPPINGS					*screensaver-key-mappings*
 
 ------------------------------------------------------------------------------
 CHANGELOG					*screensaver-changelog*
+
+0.2	2015-01-24
+	- Set colorcolumn=
+
+0.1	2015-01-21
+	- Improve g:loaded_screensaver check
+	- Support coompatible mode
+	- Support coompatible mode
 
 0.1	2015-01-21
 	- Improve g:loaded_screensaver check
