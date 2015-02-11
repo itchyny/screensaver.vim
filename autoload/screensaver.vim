@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/01/24 15:18:06.
+" Last Change: 2015/02/11 11:27:56.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -85,6 +85,9 @@ function! s:self.setoption() dict
         \ nocursorcolumn nocursorline nonumber nomodeline filetype=screensaver
   if exists('&colorcolumn')
     setlocal colorcolumn=
+  endif
+  if exists('&relativenumber')
+    setlocal norelativenumber
   endif
 endfunction
 
