@@ -2,17 +2,17 @@
 " Filename: autoload/screensaver/source/password.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/12/07 20:45:09.
+" Last Change: 2015/02/18 10:08:31.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#source#password#new()
+function! screensaver#source#password#new() abort
   return deepcopy(s:self)
 endfunction
 
-function! screensaver#source#password#set(password)
+function! screensaver#source#password#set(password) abort
   if s:set_password
     call screensaver#util#error('[screensaver] The password is already set. You cannot change the password.')
     return
@@ -26,11 +26,11 @@ function! screensaver#source#password#set(password)
 endfunction
 
 if exists('*sha256')
-  function! s:sha256(str)
+  function! s:sha256(str) abort
     return sha256(a:str)
   endfunction
 else
-  function! s:sha256(str)
+  function! s:sha256(str) abort
     return a:str
   endfunction
 endif
@@ -40,7 +40,7 @@ let s:self.password = s:sha256('')
 let s:self.input = ''
 let s:set_password = 0
 
-function! s:self.start() dict
+function! s:self.start() dict abort
   let save_cpo = &cpo
   set cpo&vim
   call b:screensaver.restorecursor()
@@ -79,20 +79,20 @@ function! s:self.start() dict
   let &cpo = save_cpo
 endfunction
 
-function! s:self.inputchar(c) dict
+function! s:self.inputchar(c) dict abort
   let self.input .= nr2char(a:c)
 endfunction
 
-function! s:self.clear() dict
+function! s:self.clear() dict abort
   let self.input = ''
   call b:screensaver.redraw()
 endfunction
 
-function! s:self.backspace() dict
+function! s:self.backspace() dict abort
   let self.input = self.input[:-2]
 endfunction
 
-function! s:self.enter() dict
+function! s:self.enter() dict abort
   if self.password ==# s:sha256(self.input)
     call b:screensaver.end(1)
   else
@@ -106,7 +106,7 @@ function! s:self.enter() dict
   endif
 endfunction
 
-function! s:self.redraw() dict
+function! s:self.redraw() dict abort
   call setline(1, repeat([''], winheight(0)))
   let m = 'Password: ' . repeat('*', len(self.input))
   let w = repeat(' ', max([(winwidth(0) - len(m)) / 2, 0]))
@@ -120,7 +120,7 @@ function! s:self.redraw() dict
   endif
 endfunction
 
-function! s:self.end() dict
+function! s:self.end() dict abort
 endfunction
 
 let &cpo = s:save_cpo

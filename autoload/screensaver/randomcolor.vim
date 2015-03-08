@@ -2,13 +2,13 @@
 " Filename: autoload/screensaver/randomcolor.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/31 01:53:15.
+" Last Change: 2015/02/18 10:07:53.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#randomcolor#new()
+function! screensaver#randomcolor#new() abort
   let self = deepcopy(s:self)
   let m = s:hlcolormax / 4
   let self.colornum = [ screensaver#random#number() % (m * 2) + m,
@@ -35,14 +35,14 @@ let s:gui = has('gui_running')
 let s:is_win32cui = (has('win32') || has('win64')) && !has('gui_running')
 
 if s:is_win32cui
-  function! s:self.next() dict
+  function! s:self.next() dict abort
     let self.time = (get(self, 'time') + 1) % 720
     if self.time % s:updatetime == 0
       let self.hlnumwin32 = screensaver#random#number(1, 14)
     endif
   endfunction
 else
-  function! s:self.next() dict
+  function! s:self.next() dict abort
     let self.time = (get(self, 'time') + 1) % 720
     if self.time % s:updatetime == 0
       let self.index = screensaver#random#number() % 3
@@ -65,15 +65,15 @@ else
 endif
 
 if s:is_win32cui
-  function! s:self.get() dict
+  function! s:self.get() dict abort
     return self.hlnumwin32
   endfunction
 elseif s:gui
-  function! s:self.get() dict
+  function! s:self.get() dict abort
     return printf('#%02x%02x%02x', self.colornum[0], self.colornum[1], self.colornum[2])
   endfunction
 else
-  function! s:self.get() dict
+  function! s:self.get() dict abort
     return self.colornum[0] * 36 + self.colornum[1] * 6 + self.colornum[2] + 16
   endfunction
 endif

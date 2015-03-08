@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/random.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/29 15:40:08.
+" Last Change: 2015/02/18 10:07:46.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -24,7 +24,7 @@ endif
 "   screensaver#random#number()     : an unbounded random integer number.
 "   screensaver#random#number(a)    : an unbounded random number larger than a.
 "   screensaver#random#number(a, b) : a random number from [a, a + b - 1].
-function! screensaver#random#number(...)
+function! screensaver#random#number(...) abort
   let a = a:0 ? a:1 : 0
   let b = a:0 > 1 ? a:2 : 0x1000000
   let t = s:xor(s:x, (s:x * 0x800))
@@ -36,13 +36,13 @@ endfunction
 " xor function from vital.vim
 if exists('*xor')
 
-  function! s:xor(a, b)
+  function! s:xor(a, b) abort
     return xor(a:a, a:b)
   endfunction
 
 else
 
-  function! s:xor(a, b)
+  function! s:xor(a, b) abort
     let a = a:a < 0 ? a:a - 0x80000000 : a:a
     let b = a:b < 0 ? a:b - 0x80000000 : a:b
     let r = 0

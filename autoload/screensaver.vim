@@ -2,13 +2,13 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/02/11 11:27:56.
+" Last Change: 2015/02/18 10:09:39.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#new(...)
+function! screensaver#new(...) abort
   if !has_key(b:, 'screensaver')
     let controller = deepcopy(s:self)
     call controller.saveoption()
@@ -25,13 +25,13 @@ function! screensaver#new(...)
   call b:screensaver.start(source)
 endfunction
 
-function! screensaver#source(name)
+function! screensaver#source(name) abort
   let source = screensaver#source#{a:name}#new()
   let source.name = a:name
   return source
 endfunction
 
-function! screensaver#complete(arglead, cmdline, cursorpos)
+function! screensaver#complete(arglead, cmdline, cursorpos) abort
   let paths = split(globpath(&runtimepath, 'autoload/screensaver/source/**.vim'), '\n')
   let names = map(paths, 'substitute(fnamemodify(v:val, ":t"), "\\.vim", "", "")')
   let matchnames = filter(copy(names), 'stridx(v:val, a:arglead) == 0')
@@ -43,7 +43,7 @@ endfunction
 
 let s:self = {}
 
-function! s:self.start(source) dict
+function! s:self.start(source) dict abort
   call self.setoption()
   call self.setcursor()
   call self.call('end')
@@ -65,7 +65,7 @@ function! s:self.start(source) dict
   let self.bufnr = bufnr('')
 endfunction
 
-function! s:self.saveoption() dict
+function! s:self.saveoption() dict abort
   let self.setting = {}
   let self.setting.laststatus = &laststatus
   let self.setting.showtabline = &showtabline
@@ -78,7 +78,7 @@ function! s:self.saveoption() dict
   let self.setting.hiCursor = map(filter(result, 'stridx(v:val, "xxx") >= 0'), 'substitute(v:val, "xxx", " ", "")')
 endfunction
 
-function! s:self.setoption() dict
+function! s:self.setoption() dict abort
   setlocal laststatus=0 showtabline=0 noruler updatetime=150 nohlsearch
         \ buftype=nofile noswapfile nolist completefunc= omnifunc=
         \ bufhidden=hide wrap nowrap nobuflisted nofoldenable foldcolumn=0
@@ -91,7 +91,7 @@ function! s:self.setoption() dict
   endif
 endfunction
 
-function! s:self.restoreoption() dict
+function! s:self.restoreoption() dict abort
   let &laststatus = self.setting.laststatus
   let &showtabline = self.setting.showtabline
   let &ruler = self.setting.ruler
@@ -100,23 +100,23 @@ function! s:self.restoreoption() dict
   call self.restorecursor()
 endfunction
 
-function! s:self.setcursor() dict
+function! s:self.setcursor() dict abort
   silent! hi Cursor guifg=fg guibg=bg
 endfunction
 
-function! s:self.restorecursor() dict
+function! s:self.restorecursor() dict abort
   if len(self.setting.hiCursor)
     silent! exec 'hi ' self.setting.hiCursor[0]
   endif
 endfunction
 
-function! s:self.redraw() dict
+function! s:self.redraw() dict abort
   call cursor(1, 1)
   call self.call('redraw')
   silent! call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>", 'n')
 endfunction
 
-function! s:self.mapping() dict
+function! s:self.mapping() dict abort
   let save_cpo = &cpo
   set cpo&vim
   nnoremap <buffer><silent> <Plug>(screensaver_end) :<C-u>call b:screensaver.end()<CR>
@@ -129,17 +129,17 @@ function! s:self.mapping() dict
   let &cpo = save_cpo
 endfunction
 
-function! s:self.call(method) dict
+function! s:self.call(method) dict abort
   if has_key(self, 'source') && has_key(self.source, a:method)
     call self.source[a:method]()
   endif
 endfunction
 
-function! s:self.previous() dict
+function! s:self.previous() dict abort
   call screensaver#new(get(self, 'previous_name', self.source.name))
 endfunction
 
-function! s:self.end(...) dict
+function! s:self.end(...) dict abort
   call self.call('end')
   if a:0 && a:1 || !get(g:, 'screensaver_password')
     call self.restoreoption()

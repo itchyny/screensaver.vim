@@ -2,13 +2,13 @@
 " Filename: autoload/screensaver/source/largeclock.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/06/01 01:16:32.
+" Last Change: 2015/02/18 10:08:14.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#source#largeclock#new()
+function! screensaver#source#largeclock#new() abort
   return deepcopy(s:self)
 endfunction
 
@@ -18,12 +18,12 @@ let s:self.timehm = []
 let s:self.pixels = []
 let s:self.pixelshm = []
 
-function! s:self.start() dict
+function! s:self.start() dict abort
   let self.hl = screensaver#randomhighlight#new({ 'name': 'ScreenSaverClock' })
   call self.setline()
 endfunction
 
-function! s:self.redraw() dict
+function! s:self.redraw() dict abort
   if [self.h, self.w] != [winheight(0), winwidth(0)]
     call self.setline()
   endif
@@ -56,12 +56,12 @@ function! s:self.redraw() dict
   endfor
 endfunction
 
-function! s:self.setline() dict
+function! s:self.setline() dict abort
   let [self.h, self.w] = [winheight(0), winwidth(0)]
   call setline(1, repeat([repeat(' ', winwidth(0))], winheight(0)))
 endfunction
 
-function! s:self.end() dict
+function! s:self.end() dict abort
   silent! syntax clear ScreenSaverClock
 endfunction
 

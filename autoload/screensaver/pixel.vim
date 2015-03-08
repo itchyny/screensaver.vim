@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/pixel.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/30 16:11:01.
+" Last Change: 2015/02/18 10:07:42.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -15,7 +15,7 @@ set cpo&vim
 "   returns: pixel data in an array
 let s:pixel = { ' ': [ [2], [2], [2], [2], [2] ] }
 let s:dir = expand('<sfile>:p:h') . '/pixel/'
-function! screensaver#pixel#get(chr)
+function! screensaver#pixel#get(chr) abort
   if a:chr ==# ''
     return repeat([''], 5)
   endif
@@ -51,7 +51,7 @@ function! screensaver#pixel#get(chr)
   return get(s:pixel, a:chr, s:pixel[' '])
 endfunction
 
-function! screensaver#pixel#getstr(str, ...)
+function! screensaver#pixel#getstr(str, ...) abort
   let pixels = a:0 ? deepcopy(a:1) : [ [0], [0], [0], [0], [0] ]
   if a:str ==# ''
     return pixels

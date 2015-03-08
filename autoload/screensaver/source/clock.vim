@@ -2,13 +2,13 @@
 " Filename: autoload/screensaver/source/clock.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/06/05 21:07:34.
+" Last Change: 2015/02/18 10:08:00.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#source#clock#new()
+function! screensaver#source#clock#new() abort
   return deepcopy(s:self)
 endfunction
 
@@ -18,7 +18,7 @@ let s:self.timehm = []
 let s:self.pixels = []
 let s:self.pixelshm = []
 
-function! s:self.start() dict
+function! s:self.start() dict abort
   let [h, w] = [winheight(0) / 4 + 1, (winwidth(0) - 50) / 4 + 1]
   let self.i = max([1, min([max([0, winheight(0) - 5]), screensaver#random#number() % (h * 2) + h])])
   let self.j = max([1, (screensaver#random#number()) % (w * 2) + w])
@@ -28,7 +28,7 @@ function! s:self.start() dict
   call self.setline()
 endfunction
 
-function! s:self.redraw() dict
+function! s:self.redraw() dict abort
   if [self.h, self.w] != [winheight(0), winwidth(0)]
     call self.setline()
   endif
@@ -59,12 +59,12 @@ function! s:self.redraw() dict
   call self.move()
 endfunction
 
-function! s:self.setline() dict
+function! s:self.setline() dict abort
   let [self.h, self.w] = [winheight(0), winwidth(0)]
   call setline(1, repeat([repeat(' ', winwidth(0))], winheight(0)))
 endfunction
 
-function! s:self.move() dict
+function! s:self.move() dict abort
   let self.i += self.di
   let self.j += self.dj
   if self.di > 0 && self.i + 4 > winheight(0) || self.di < 0 && self.i <= 1
@@ -77,7 +77,7 @@ function! s:self.move() dict
   endif
 endfunction
 
-function! s:self.end() dict
+function! s:self.end() dict abort
   silent! syntax clear ScreenSaverClock
 endfunction
 

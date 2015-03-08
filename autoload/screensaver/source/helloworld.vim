@@ -2,13 +2,13 @@
 " Filename: autoload/screensaver/source/helloworld.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/06/02 12:39:26.
+" Last Change: 2015/02/18 10:08:05.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#source#helloworld#new()
+function! screensaver#source#helloworld#new() abort
   return deepcopy(s:self)
 endfunction
 
@@ -16,7 +16,7 @@ let s:self = {}
 let s:self.message = 'Hello, world!'
 
 " Actions when the screensaver starts.
-function! s:self.start() dict
+function! s:self.start() dict abort
   let self.i = winheight(0) / 2
   let self.j = winwidth(0) / 2
   let self.di = 1
@@ -25,7 +25,7 @@ function! s:self.start() dict
 endfunction
 
 " Actions when the screensaver redraws.
-function! s:self.redraw() dict
+function! s:self.redraw() dict abort
   call setline(self.i, '')
   let self.i += self.di
   let self.j += self.dj
@@ -42,7 +42,7 @@ endfunction
 let s:strdisplaywidth = exists('*strdisplaywidth') ? function('strdisplaywidth') : function('strwidth')
 
 " Actions when the screensaver exists.
-function! s:self.end() dict
+function! s:self.end() dict abort
 endfunction
 
 let &cpo = s:save_cpo

@@ -2,13 +2,13 @@
 " Filename: autoload/screensaver/util.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/12/07 20:44:55.
+" Last Change: 2015/02/18 10:09:30.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! screensaver#util#sum(xs)
+function! screensaver#util#sum(xs) abort
   let n = 0
   for i in range(len(a:xs))
     let n += a:xs[i]
@@ -16,7 +16,7 @@ function! screensaver#util#sum(xs)
   return n
 endfunction
 
-function! screensaver#util#message(msg)
+function! screensaver#util#message(msg) abort
   redraw
   echo ''
   for msg in split(a:msg, '\n')
@@ -24,7 +24,7 @@ function! screensaver#util#message(msg)
   endfor
 endfunction
 
-function! screensaver#util#error(msg)
+function! screensaver#util#error(msg) abort
   redraw
   echo ''
   echohl ErrorMsg
@@ -35,16 +35,16 @@ function! screensaver#util#error(msg)
 endfunction
 
 if exists('*strftime')
-  function! screensaver#util#time()
+  function! screensaver#util#time() abort
     return [strftime('%H') * 1, strftime('%M') * 1, strftime('%S') * 1]
   endfunction
 else
-  function! screensaver#util#time()
+  function! screensaver#util#time() abort
     return [system('date "+%H"') * 1, system('date "+%M"') * 1, system('date "+%S"') * 1]
   endfunction
 endif
 
-function! screensaver#util#nmapall(mapping)
+function! screensaver#util#nmapall(mapping) abort
   let save_cpo = &cpo
   set cpo&vim
   let nmaps = split(screensaver#util#capture('nmap'), '\n')
@@ -72,7 +72,7 @@ function! screensaver#util#nmapall(mapping)
   let &cpo = save_cpo
 endfunction
 
-function! screensaver#util#capture(cmd)
+function! screensaver#util#capture(cmd) abort
   let [save_verbose, save_verbosefile] = [&verbose, &verbosefile]
   try
     set verbose=0 verbosefile=
