@@ -1,7 +1,7 @@
 # Screensavers for Vim
 ## Usage
 
-    :Screensaver
+    :ScreenSaver
 
 ![screensaver.vim](https://raw.githubusercontent.com/wiki/itchyny/screensaver.vim/image/image.gif)
 
