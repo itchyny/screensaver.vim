@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/02/18 10:09:39.
+" Last Change: 2015/03/13 06:18:28.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -72,10 +72,10 @@ function! s:self.saveoption() dict abort
   let self.setting.ruler = &ruler
   let self.setting.updatetime = &updatetime
   let self.setting.hlsearch = &hlsearch
+  let self.setting.guicursor = &guicursor
+  let self.setting.t_ve = &t_ve
   let self.setting.winnr = winnr()
   let self.setting.tabpagenr = tabpagenr()
-  let result = split(screensaver#util#capture('hi Cursor'), '\n')
-  let self.setting.hiCursor = map(filter(result, 'stridx(v:val, "xxx") >= 0'), 'substitute(v:val, "xxx", " ", "")')
 endfunction
 
 function! s:self.setoption() dict abort
@@ -101,13 +101,13 @@ function! s:self.restoreoption() dict abort
 endfunction
 
 function! s:self.setcursor() dict abort
-  silent! hi Cursor guifg=fg guibg=bg
+  set guicursor=n:block-NONE
+  set t_ve=
 endfunction
 
 function! s:self.restorecursor() dict abort
-  if len(self.setting.hiCursor)
-    silent! exec 'hi ' self.setting.hiCursor[0]
-  endif
+  let &guicursor = self.setting.guicursor
+  let &t_ve = self.setting.t_ve
 endfunction
 
 function! s:self.redraw() dict abort

@@ -4,7 +4,7 @@ Version: 0.2
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/screensaver.vim
-Last Change: 2015/02/11 11:30:35.
+Last Change: 2015/05/08 07:34:50.
 
 CONTENTS					*screensaver-contents*
 
@@ -88,14 +88,10 @@ KEY MAPPINGS					*screensaver-key-mappings*
 ------------------------------------------------------------------------------
 CHANGELOG					*screensaver-changelog*
 
-0.2	2015-01-24, 02-11
+0.2	2015-01-24, 02-11, 05-08
 	- Set colorcolumn=
 	- Set norelativenumber
-
-0.1	2015-01-21
-	- Improve g:loaded_screensaver check
-	- Support coompatible mode
-	- Support coompatible mode
+	- use &guicursor and &t_ve to hide the cursor
 
 0.1	2015-01-21
 	- Improve g:loaded_screensaver check
