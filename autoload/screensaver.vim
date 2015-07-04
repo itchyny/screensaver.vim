@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/03/13 06:18:28.
+" Last Change: 2015/06/06 16:34:45.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -113,7 +113,7 @@ endfunction
 function! s:self.redraw() dict abort
   call cursor(1, 1)
   call self.call('redraw')
-  silent! call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>", 'n')
+  silent! call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>" . (v:count ? v:count : ''), 'n')
 endfunction
 
 function! s:self.mapping() dict abort
