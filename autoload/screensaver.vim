@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/06/06 16:34:45.
+" Last Change: 2016/02/05 08:38:39.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -31,7 +31,7 @@ function! screensaver#source(name) abort
   return source
 endfunction
 
-function! screensaver#complete(arglead, cmdline, cursorpos) abort
+function! screensaver#complete(arglead, ...) abort
   let paths = split(globpath(&runtimepath, 'autoload/screensaver/source/**.vim'), '\n')
   let names = map(paths, 'substitute(fnamemodify(v:val, ":t"), "\\.vim", "", "")')
   let matchnames = filter(copy(names), 'stridx(v:val, a:arglead) == 0')
