@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/randomhighlight.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/02/18 10:07:55.
+" Last Change: 2017/04/09 22:46:26.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -14,8 +14,7 @@ endfunction
 
 let s:self = {}
 let s:self.time = -1
-let s:gui = has('gui_running')
-      \ || (has('termguicolors') && &termguicolors)
+let s:gui = has('gui_running') || (has('termguicolors') && &termguicolors)
 
 function! s:self.highlight() dict abort
   let self.time = (get(self, 'time') + 1) % 36

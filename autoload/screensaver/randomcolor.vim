@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/randomcolor.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/02/18 10:07:53.
+" Last Change: 2017/04/09 22:46:34.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -21,8 +21,7 @@ endfunction
 let s:self = {}
 let s:self.time = -1
 
-let s:gui = has('gui_running')
-      \ || (has('termguicolors') && &termguicolors)
+let s:gui = has('gui_running') || (has('termguicolors') && &termguicolors)
 if s:gui
   let s:hlcolormax = 0xff
   let s:colordiff = 0x06
