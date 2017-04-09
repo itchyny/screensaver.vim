@@ -21,7 +21,9 @@ endfunction
 let s:self = {}
 let s:self.time = -1
 
-if has('gui_running')
+let s:gui = has('gui_running')
+      \ || (has('termguicolors') && &termguicolors)
+if s:gui
   let s:hlcolormax = 0xff
   let s:colordiff = 0x06
   let s:updatetime = 48
@@ -31,8 +33,7 @@ else
   let s:updatetime = 6
 endif
 
-let s:gui = has('gui_running')
-let s:is_win32cui = (has('win32') || has('win64')) && !has('gui_running')
+let s:is_win32cui = (has('win32') || has('win64')) && !s:gui
 
 if s:is_win32cui
   function! s:self.next() dict abort
