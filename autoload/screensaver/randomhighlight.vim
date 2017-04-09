@@ -14,7 +14,9 @@ endfunction
 
 let s:self = {}
 let s:self.time = -1
-let s:gui = has('gui_running')
+let s:gui = (has('gui_running')
+      \ || (has('termtruecolor') && &guicolors == 1)
+      \ || (has('nvim') && has('termguicolors') && &termguicolors == 1))
 
 function! s:self.highlight() dict abort
   let self.time = (get(self, 'time') + 1) % 36

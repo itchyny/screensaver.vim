@@ -31,8 +31,10 @@ else
   let s:updatetime = 6
 endif
 
-let s:gui = has('gui_running')
-let s:is_win32cui = (has('win32') || has('win64')) && !has('gui_running')
+let s:gui = (has('gui_running')
+      \ || (has('termtruecolor') && &guicolors == 1)
+      \ || (has('nvim') && has('termguicolors') && &termguicolors == 1))
+let s:is_win32cui = (has('win32') || has('win64')) && s:gui != 1
 
 if s:is_win32cui
   function! s:self.next() dict abort
