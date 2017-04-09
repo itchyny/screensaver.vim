@@ -21,9 +21,8 @@ endfunction
 let s:self = {}
 let s:self.time = -1
 
-let s:gui = (has('gui_running')
-      \ || (has('termtruecolor') && &guicolors == 1)
-      \ || (has('nvim') && has('termguicolors') && &termguicolors == 1))
+let s:gui = has('gui_running')
+      \ || (has('termguicolors') && &termguicolors == 1)
 if s:gui
   let s:hlcolormax = 0xff
   let s:colordiff = 0x06
