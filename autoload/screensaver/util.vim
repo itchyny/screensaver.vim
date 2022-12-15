@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/util.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/03/29 07:26:31.
+" Last Change: 2022/12/16 08:52:55.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -50,7 +50,7 @@ function! screensaver#util#nmapall(mapping) abort
   let nmaps = split(screensaver#util#capture('nmap'), '\n')
   let cs = map(filter(map(nmaps, 'v:val[3:]'),
         \            'v:val !~# "screensaver\\|^<Plug>\\|^<[-A-Z]\\+> " && v:val =~# "^\\S\\S\\+"'),
-        \     'substitute(v:val, "\\s.*", "", "")')
+        \     'substitute(matchstr(v:val, "^\\S*"), "|", "<BAR>", "g")')
   for c in cs
     exec 'nmap <buffer> ' . c . ' ' . a:mapping
   endfor
