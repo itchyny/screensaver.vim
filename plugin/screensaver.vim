@@ -2,10 +2,10 @@
 " Filename: plugin/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/01/08 10:03:12.
+" Last Change: 2022/12/16 08:58:15.
 " =============================================================================
 
-if exists('g:loaded_screensaver') || v:version < 700
+if exists('g:loaded_screensaver') || v:version < 800
   finish
 endif
 let g:loaded_screensaver = 1

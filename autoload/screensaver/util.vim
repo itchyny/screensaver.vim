@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/util.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2022/12/16 08:52:55.
+" Last Change: 2022/12/16 08:55:18.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -45,10 +45,7 @@ else
 endif
 
 function! screensaver#util#nmapall(mapping) abort
-  let save_cpo = &cpo
-  set cpo&vim
-  let nmaps = split(screensaver#util#capture('nmap'), '\n')
-  let cs = map(filter(map(nmaps, 'v:val[3:]'),
+  let cs = map(filter(map(split(execute('nmap'), '\n'), 'v:val[3:]'),
         \            'v:val !~# "screensaver\\|^<Plug>\\|^<[-A-Z]\\+> " && v:val =~# "^\\S\\S\\+"'),
         \     'substitute(matchstr(v:val, "^\\S*"), "|", "<BAR>", "g")')
   for c in cs
@@ -69,20 +66,6 @@ function! screensaver#util#nmapall(mapping) abort
     exec 'nmap <buffer> <C-' . c . '> ' . a:mapping
     exec 'nmap <buffer> <S-' . c . '> ' . a:mapping
   endfor
-  let &cpo = save_cpo
-endfunction
-
-function! screensaver#util#capture(cmd) abort
-  let [save_verbose, save_verbosefile] = [&verbose, &verbosefile]
-  try
-    set verbose=0 verbosefile=
-    redir => res
-    silent! execute a:cmd
-  finally
-    redir END
-    let [&verbose, &verbosefile] = [save_verbose, save_verbosefile]
-  endtry
-  return res
 endfunction
 
 let &cpo = s:save_cpo
