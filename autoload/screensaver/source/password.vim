@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/source/password.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/02/18 10:08:31.
+" Last Change: 2022/12/16 09:03:03.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -44,7 +44,6 @@ function! s:self.start() dict abort
   let save_cpo = &cpo
   set cpo&vim
   call b:screensaver.restorecursor()
-  set updatetime=40                " b:screensaver restores the option.
   call setline(1, repeat([''], winheight(0)))
   for c in range(32) + range(127, 255)
     exec 'nnoremap <buffer> <Char-' . c . '> <Nop>'
@@ -81,6 +80,7 @@ endfunction
 
 function! s:self.inputchar(c) dict abort
   let self.input .= nr2char(a:c)
+  call b:screensaver.redraw()
 endfunction
 
 function! s:self.clear() dict abort
@@ -90,6 +90,7 @@ endfunction
 
 function! s:self.backspace() dict abort
   let self.input = self.input[:-2]
+  call b:screensaver.redraw()
 endfunction
 
 function! s:self.enter() dict abort

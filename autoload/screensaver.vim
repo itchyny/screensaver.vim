@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2016/11/21 20:10:28.
+" Last Change: 2022/12/16 09:00:17.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -43,8 +43,6 @@ endfunction
 
 let s:self = {}
 
-let s:use_timer = has('timers') && (v:version >= 800 || has('nvim'))
-
 function! s:self.start(source) dict abort
   call self.setoption()
   call self.setcursor()
@@ -53,16 +51,9 @@ function! s:self.start(source) dict abort
   call self.mapping()
   call self.call('start')
   call self.redraw()
+  call timer_start(200, function('s:timer_callback'))
   execute 'augroup ScreenSaver' . bufnr('')
     autocmd!
-    if s:use_timer
-      call timer_start(200, function('s:timer_callback'))
-    else
-      autocmd CursorHold <buffer>
-            \   if has_key(b:, 'screensaver')
-            \ |   call b:screensaver.redraw()
-            \ | endif
-    endif
     autocmd BufLeave <buffer>
           \   if has_key(b:, 'screensaver')
           \ |   call b:screensaver.end()
@@ -82,9 +73,6 @@ function! s:self.saveoption() dict abort
   let self.setting.laststatus = &laststatus
   let self.setting.showtabline = &showtabline
   let self.setting.ruler = &ruler
-  if !s:use_timer
-    let self.setting.updatetime = &updatetime
-  endif
   let self.setting.hlsearch = &hlsearch
   let self.setting.guicursor = &guicursor
   let self.setting.t_ve = &t_ve
@@ -103,18 +91,12 @@ function! s:self.setoption() dict abort
   if exists('&relativenumber')
     setlocal norelativenumber
   endif
-  if !s:use_timer
-    setlocal updatetime=150
-  endif
 endfunction
 
 function! s:self.restoreoption() dict abort
   let &laststatus = self.setting.laststatus
   let &showtabline = self.setting.showtabline
   let &ruler = self.setting.ruler
-  if !s:use_timer
-    let &updatetime = self.setting.updatetime
-  endif
   let &hlsearch = self.setting.hlsearch
   call self.restorecursor()
 endfunction
@@ -132,11 +114,7 @@ endfunction
 function! s:self.redraw() dict abort
   call cursor(1, 1)
   call self.call('redraw')
-  if s:use_timer
-    call timer_start(200, function('s:timer_callback'))
-  else
-    silent! call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>" . (v:count ? v:count : ''), 'n')
-  endif
+  call timer_start(200, function('s:timer_callback'))
 endfunction
 
 function! s:self.mapping() dict abort
