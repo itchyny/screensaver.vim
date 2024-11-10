@@ -2,7 +2,7 @@
 " Filename: autoload/screensaver/source/largeclock.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/02/18 10:08:14.
+" Last Change: 2024/11/10 22:06:22.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -41,24 +41,26 @@ function! s:self.redraw() dict abort
     let self.pixels = pixels
     let self.pixelswidth = screensaver#util#sum(pixels[0])
   endif
-  let a = max([1, min([winheight(0) * 3 / 4 / 5, winwidth(0) / 62])])
-  let x = max([1, (winheight(0) + 1 - 5 * a) / 2])
-  let y = max([1, (winwidth(0) - self.pixelswidth * a) / 2])
-  let c = 'syntax match ScreenSaverClock /\%>'
+  let a = max([1, min([self.h * 3 / 4 / 5, self.w / 62])])
+  let x = max([1, (self.h + 1 - 5 * a) / 2])
+  let y = max([1, (self.w - self.pixelswidth * a) / 2])
   silent! syntax clear ScreenSaverClock
-  for i in range(5)
-    let [n, p, l] = [y, pixels[i], (len(pixels[i]) - 1) / 2]
-    for j in range(l)
-      let n += p[2 * j] * a
-      exec c . (x + i * a - 1) . 'l\%<' . (x + i * a + a) . 'l\%' . n . 'c.*\%' . (n + p[2 * j + 1] * a) . 'c/'
-      let n += p[2 * j + 1] * a
+  for i in range(len(pixels))
+    let [k, ps, cs] = [y, pixels[i], []]
+    for j in range(0, len(ps) - 2, 2)
+      let k += ps[j] * a
+      let l = k + ps[j + 1] * a
+      call add(cs, '%' . k . 'c.*%' . l . 'c')
+      let k = l
     endfor
+    execute printf('syntax match ScreenSaverClock /\v%%>%dl%%<%dl%%(%s)/',
+          \ x + i * a - 1, x + i * a + a, join(cs, '|'))
   endfor
 endfunction
 
 function! s:self.setline() dict abort
   let [self.h, self.w] = [winheight(0), winwidth(0)]
-  call setline(1, repeat([repeat(' ', winwidth(0))], winheight(0)))
+  call setline(1, repeat([repeat(' ', self.w)], self.h))
 endfunction
 
 function! s:self.end() dict abort
